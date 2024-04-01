@@ -3,59 +3,45 @@
     <h4>Layanan</h4>
     <form>
       <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title"
-          v-model="currentLayanan.title"
-        />
+        <label for="title"><strong>Title:</strong></label>
+        <p> {{currentLayanan.title}}</p>
       </div>
       <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description"
-          v-model="currentLayanan.description"
-        />
+        <label for="description"><strong>Description:</strong></label>
+        <p> {{currentLayanan.description}}</p>
       </div>
 
       <div class="form-group">
-        <label for="alamat">Alamat</label>
-        <input type="text" class="form-control" id="alamat"
-          v-model="currentLayanan.description"
-        />
+        <label for="alamat"><strong>Alamat:</strong></label>
+        <p> {{currentLayanan.alamat}}</p>
       </div>
 
 
       <div class="form-group">
-        <label for="rating">Rating</label>
-        <input type="text" class="form-control" id="rating"
-          v-model="currentLayanan.rating"
-        />
+        <label for="rating"><strong>Rating:</strong></label>
+        <p> {{currentLayanan.rating}}</p>
       </div>
 
       <div class="form-group">
-        <label for="ulasan">Ulasan</label>
+        <label for="ulasan"><strong>Ulasan:</strong></label>
         <input type="text" class="form-control" id="ulasan"
           v-model="currentLayanan.ulasan"
         />
       </div>
 
       <div class="form-group">
-        <label for="Phone">Phone</label>
-        <input type="text" class="form-control" id="Phone"
-          v-model="currentLayanan.phone"
-        />
+        <label for="Phone"><strong>Phone:</strong></label>
+        <p> {{currentLayanan.phone}}</p>
       </div>
-      
 
     </form>
 
-    <button class="badge badge-danger mr-2"
-      @click="deleteLayanan"
-    >Delete
-    </button>
+
 
     <button type="submit" class="badge badge-success"
       @click="updateLayanan"
     >
-      Update
+      Update ulasan
     </button>
     <p>{{ message }}</p>
   </div>
@@ -122,18 +108,6 @@ export default {
           console.log(e);
         });
     },
-
-    deleteLayanan() {
-      LayananDataService.delete(this.currentLayanan.id)
-        .then(response => {
-          console.log(response.data);
-          this.message = 'Layanan sudah berhasil dihapus'
-          this.$router.push("/home");
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
   },
   mounted() {
     this.message = '';

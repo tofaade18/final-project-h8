@@ -12,7 +12,3 @@ createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");
 
-  new Vue({
-    router,
-    render: h => h(App),
-  }).$mount('#app')

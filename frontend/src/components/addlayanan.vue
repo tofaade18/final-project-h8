@@ -95,7 +95,7 @@ export default {
         published: false,
         rating: "",
         alamat: "",
-        number:"",
+        phone:"",
       },
       submitted: false
     };
@@ -109,7 +109,7 @@ export default {
         ulasan: this.layanan.ulasan,
         rating: this.layanan.rating,
         alamat: this.layanan.alamat,
-        number: this.layanan.number
+        phone: this.layanan.phone
       };
 
       LayananDataService.create(data)

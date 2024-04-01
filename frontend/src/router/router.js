@@ -3,24 +3,25 @@ import Home from "../components/Home.vue";
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
 const Profile = () => import("../components/Profile.vue")
-const BoardAdmin = () => import("../components/BoardAdmin.vue")
-const BoardModerator = () => import("../components/BoardModerator.vue")
-const BoardUser = () => import("../components/BoardUser.vue")
+const add = ()=> import("../components/addlayanan.vue")
+const layananU = ()=>import("../components/layananlist(user).vue")
+const listu = () => import("../components/layanan(user).vue")
+const LA = () => import("../components/layananP.vue")
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: Home,
+    component: LA,
   },
   {
     path: "/home",
-    component: () => import("../components/layananlist.vue"),
+    component: layananU,
   },
   {
       path: "/home/:id",
-      name: "layanan-details",
-      component: () => import("../components/layanan.vue")
+      name: "layanan-details-",
+      component: listu,
     },
   {
     path: "/login",
@@ -38,18 +39,24 @@ const routes = [
   {
     path: "/admin",
     name: "admin",
-    component: BoardAdmin,
-  },
-  {
-    path: "/mod",
-    name: "moderator",
-    component: BoardModerator,
-  },
-  {
-    path: "/add",
+    children: [
+      {
+    path: "/admin/add",
     name: "user",
-    component: ()=> import("../components/addlayanan.vue"),
+    component: add,
   },
+  {
+    path: "/admin/home",
+    component: () => import("../components/layananlist.vue"),
+  },
+  {
+      path: "/admin/home/:id",
+      name: "layanan-details",
+      component: () => import("../components/layanan.vue")
+    },
+    ]
+  },
+
 ];
 
 const router = createRouter({
@@ -57,15 +64,15 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home'];
-    const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('user');
-    if (authRequired && !loggedIn) {
-      next('/login');
-    } else {
-      next();
-    }
-  });
+// router.beforeEach((to, from, next) => {
+//     const publicPages = ['/login', '/register', '/home'];
+//     const authRequired = !publicPages.includes(to.path);
+//     const loggedIn = localStorage.getItem('user');
+//     if (authRequired && !loggedIn) {
+//       next('/login');
+//     } else {
+//       next();
+//     }
+//   });
 
 export default router;

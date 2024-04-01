@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      <h4>Layanan List Edit</h4>
+      <h4>Layanan List</h4>
       <ul class="list-group">
         <li class="list-group-item"
           :class="{ active: index == currentIndex }"
@@ -25,10 +25,6 @@
           {{ layanan.title }}
         </li>
       </ul>
-
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllLayanans">
-        Remove All
-      </button>
     </div>
     <div class="col-md-6">
       <div v-if="currentLayanan">
@@ -55,7 +51,7 @@
           <label><strong>Phone:</strong></label> {{ currentLayanan.phone }}
         </div>
 
-        <router-link :to="'/admin/home/' + currentLayanan.id" class="badge badge-warning">Edit</router-link>
+        <router-link :to="'/home/' + currentLayanan.id" class="badge badge-warning">Edit</router-link>
       </div>
       <div v-else>
         <br />

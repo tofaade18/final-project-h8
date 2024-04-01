@@ -1,21 +1,24 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <div class="navbar-nav mr-auto">
+      <div v-if="!currentUser" class="navbar-nav mr-auto">
         <li class="nav-item">
+          <router-link to="/" class="nav-link">
+            <font-awesome-icon icon="home" /> Home
+          </router-link>
+        </li>
+      </div>
+      <div class="navbar-nav mr-auto">
+        <li class="nav-item" v-if="currentUser">
           <router-link to="/home" class="nav-link">
             <font-awesome-icon icon="home" /> Home
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin" class="nav-link">Admin Board</router-link>
+          <router-link to="/admin/home" class="nav-link"> Edit </router-link>
+          <router-link v-if="showAdminBoard" to="/admin/add" class="nav-link">Add</router-link>
         </li>
-        <li v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Moderator Board</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link v-if="currentUser" to="/add" class="nav-link">User</router-link>
-        </li>
+
       </div>
 
       <div v-if="!currentUser" class="navbar-nav ml-auto">
