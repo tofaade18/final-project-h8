@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <nav class="navbar navbar-expand" style="background-color: rgba(30,30,30, 0.8);
+">
       <div v-if="!currentUser" class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link to="/" class="nav-link">
@@ -11,7 +12,7 @@
       <div class="navbar-nav mr-auto">
         <li class="nav-item" v-if="currentUser">
           <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home" /> Home
+            <font-awesome-icon/> H8 Group
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">

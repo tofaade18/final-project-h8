@@ -19,7 +19,8 @@ exports.create = (req, res) => {
       ulasan: req.body.ulasan,
       rating: req.body.rating,
       alamat: req.body.alamat,
-      phone: req.body.phone
+      phone: req.body.phone,
+      linkImg: req.body.linkImg
     };
   
     Layanan.create(layanan)
