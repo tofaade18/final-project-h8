@@ -1,58 +1,61 @@
 <template>
   <div v-if="currentLayanan" class="edit-form">
-    <h4>Layanan</h4>
-      <img :src="currentLayanan.linkImg" alt="poto" class="photos" style="height: 200px; width: 200px;">
+    <h4>Layanan {{ currentLayanan.id }}</h4>
+      <img :src="currentLayanan.linkImg" alt="poto" class="photos" style="height: 200px; width: 200px; display: flex; align-items: center">
     <form>
-      <div class="form-group">
-        <label for="title"><strong>Title:</strong></label>
-        <p> {{currentLayanan.title}}</p>
-      </div>
-      <div class="form-group">
-        <label for="description"><strong>Description:</strong></label>
-        <p> {{currentLayanan.description}}</p>
-      </div>
+      <div class="list row mt-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="title"><strong>Title:</strong></label>
+            <p> {{currentLayanan.title}}</p>
+          </div>
+          <div class="form-group">
+            <label for="description"><strong>Description:</strong></label>
+            <p> {{currentLayanan.description}}</p>
+          </div>
+          <div class="form-group">
+            <label for="alamat"><strong>Alamat:</strong></label>
+            <p> {{currentLayanan.alamat}}</p>
+          </div>
+          <div class="form-group">
+            <label for="Phone"><strong>Phone:</strong></label>
+            <p> {{currentLayanan.phone}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="rating"><strong>Rating:</strong></label>
+            <p> {{currentLayanan.ul.rating}}</p>
+            <ul>
+          <li v-for="review in currentLayanan.ul" :key="review.id">
+            <p>{{ review.rating }}</p>
+          </li>
+        </ul>
+          </div>
+          <div class="form-group">
+            <label for="rating"><strong>Review:</strong></label>
+            <p> {{currentLayanan.ul.rating}}</p>
+            <ul>
+          <li v-for="review in currentLayanan.ul" :key="review.id">
+            <p>{{ review.ulasan }}</p>
+          </li>
+        </ul>
+          </div>
 
-      <div class="form-group">
-        <label for="alamat"><strong>Alamat:</strong></label>
-        <p> {{currentLayanan.alamat}}</p>
+          <div class="form-group">
+            <label for="ulasan"><strong>Ulasan:</strong></label>
+            <input type="text" class="form-control" id="ulasan"
+              v-model="currentLayanan.ulasan"
+            />
+          </div>
+    <div class="form-group">
+            <label for="ulasan"><strong>Rating:</strong></label>
+            <input type="text" class="form-control" id="ulasan"
+              v-model="currentLayanan.rating"
+            />
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="rating"><strong>Rating:</strong></label>
-        <p> {{currentLayanan.ul.rating}}</p>
-         <ul>
-      <li v-for="review in currentLayanan.ul" :key="review.id">
-        <p>{{ review.rating }}</p>
-      </li>
-    </ul>
-      </div>
-      <div class="form-group">
-        <label for="rating"><strong>Review:</strong></label>
-        <p> {{currentLayanan.ul.rating}}</p>
-         <ul>
-      <li v-for="review in currentLayanan.ul" :key="review.id">
-        <p>{{ review.ulasan }}</p>
-      </li>
-    </ul>
-      </div>
-
-      <div class="form-group">
-        <label for="ulasan"><strong>Ulasan:</strong></label>
-        <input type="text" class="form-control" id="ulasan"
-          v-model="currentLayanan.ulasan"
-        />
-      </div>
-<div class="form-group">
-        <label for="ulasan"><strong>Rating:</strong></label>
-        <input type="text" class="form-control" id="ulasan"
-          v-model="currentLayanan.rating"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="Phone"><strong>Phone:</strong></label>
-        <p> {{currentLayanan.phone}}</p>
-      </div>
-
     </form>
 
 

@@ -14,8 +14,22 @@
       <strong>Email:</strong>
       {{currentUser.email}}
     </p>
-    <div class="history mt-5">
-      <h3>History</h3>
+    <div class="jumbotron mt-4" style="background-color:cornflowerblue;">
+      <h3><strong> History </strong></h3>
+      <div class="list row">
+        <div class="col-md-6">
+          <h5 style="margin-top: 30px;">Ulasan 1</h5>
+          <p>Apotek 1</p>
+          <p>Rating: 5</p>
+          <p>Ulasan: mantappppp</p>
+        </div>
+        <div class="col-md-6">
+          <h5 style="margin-top: 30px;">Ulasan 2</h5>
+          <p>Apotek 2</p>
+          <p>Rating: 3</p>
+          <p>Ulasan: kurengggg</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
