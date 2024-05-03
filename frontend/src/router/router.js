@@ -19,7 +19,7 @@ const routes = [
     component: layananU,
   },
   {
-      path: "/home/:id",
+      path: "/details/:id",
       name: "layanan-details-",
       component: listu,
     },
@@ -32,7 +32,7 @@ const routes = [
     component: Register,
   },
   {
-    path: "/profile",
+    path: "/profile/",
     name: "profile",
     component: Profile,
   },

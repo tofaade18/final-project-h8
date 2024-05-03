@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
+    <header class="jumbotron mt-4">
+      <h2>Profile</h2>
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{currentUser.username}}</strong>
       </h3>
     </header>
     <p>
@@ -13,19 +14,26 @@
       <strong>Email:</strong>
       {{currentUser.email}}
     </p>
-    
+    <div class="history mt-5">
+      <h3>History</h3>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Profile',
+  methods: {
+    cekparam() {
+  }
+},
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     }
   },
   mounted() {
+    // this.cekparam()
     if (!this.currentUser) {
       this.$router.push('/login');
     }
