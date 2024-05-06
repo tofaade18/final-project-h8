@@ -19,6 +19,8 @@
         </li>
         <li v-if="showAdminBoard" class="nav-item">
           <router-link to="/admin/home" class="nav-link"> Edit </router-link>
+        </li>
+        <li v-if="showAdminBoard" class="nav-item">
           <router-link v-if="showAdminBoard" to="/admin/add" class="nav-link">Add</router-link>
         </li>
 

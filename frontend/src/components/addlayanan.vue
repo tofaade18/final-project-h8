@@ -36,13 +36,13 @@
       </div>
 
       <div class="form-group">
-        <label for="rating">rating</label>
+        <label for="linkImg">Link Image</label>
         <input
           class="form-control"
-          id="rating"
+          id="linkImg"
           required
-          v-model="layanan.rating"
-          name="rating"
+          v-model="layanan.linkImg"
+          name="linkImg"
         />
       </div>
 
@@ -91,9 +91,8 @@ export default {
         title: "",
         description: "",
         jenis: "",
-        ulasan: "",
         published: false,
-        rating: "",
+        linkImg: "",
         alamat: "",
         phone:"",
       },
@@ -106,8 +105,7 @@ export default {
         title: this.layanan.title,
         description: this.layanan.description,
         jenis: this.layanan.jenis,
-        ulasan: this.layanan.ulasan,
-        rating: this.layanan.rating,
+        linkImg: this.layanan.linkImg,
         alamat: this.layanan.alamat,
         phone: this.layanan.phone
       };
