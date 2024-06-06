@@ -4,16 +4,13 @@ import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
 const Profile = () => import("../components/Profile.vue")
 const add = ()=> import("../components/addlayanan.vue")
-const layananU = ()=>import("../components/layananlist(user).vue")
+import layananU from "../components/layananlist(user).vue"
 const listu = () => import("../components/layanan(user).vue")
 const LA = () => import("../components/layananP.vue")
+const edit = () => import ("../components/editlayanan.vue")
+const deletel = () => import ("../components/deletelayanan.vue")
 
 const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: LA,
-  },
   {
     path: "/home",
     component: layananU,
@@ -46,8 +43,12 @@ const routes = [
     component: add,
   },
   {
-    path: "/admin/home",
-    component: () => import("../components/layananlist.vue"),
+    path: "/admin/edit",
+    component: edit,
+  },
+  {
+    path: "/admin/delete",
+    component: deletel,
   },
   {
       path: "/admin/home/:id",

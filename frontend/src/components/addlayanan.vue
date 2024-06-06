@@ -25,7 +25,7 @@
       </div>
 
       <div class="form-group">
-        <label for="jenis">jenis</label>
+        <label for="jenis">Jenis</label>
         <input
           class="form-control"
           id="jenis"
@@ -47,7 +47,7 @@
       </div>
 
        <div class="form-group">
-        <label for="alamat">alamat</label>
+        <label for="alamat">Alamat</label>
         <input
           class="form-control"
           id="alamat"
@@ -58,7 +58,7 @@
       </div>
 
        <div class="form-group">
-        <label for="phone">phone</label>
+        <label for="phone">Phone</label>
         <input
           class="form-control"
           id="phone"
@@ -69,11 +69,10 @@
       </div>
 
 
-      <button @click="saveLayanan" class="btn btn-success">Submit</button>
+      <button @click="saveLayanan" class="btn btn-success" :disabled="!isAdmin">Submit</button>
     </div>
 
     <div v-else>
-      <h4>You submitted successfully!</h4>
       <button class="btn btn-success" @click="newLayanan">Add</button>
     </div>
   </div>
@@ -81,7 +80,8 @@
 
 <script>
 import LayananDataService from "../services/LayananDataservice";
-
+import { useToast } from 'vue-toastification';
+import { useAuthStore } from "../store/auth.module";
 export default {
   name: "add-layanan",
   data() {
@@ -99,6 +99,12 @@ export default {
       submitted: false
     };
   },
+  computed: {
+    isAdmin() {
+      const authStore = useAuthStore();
+      return authStore.user && authStore.user.roles[1] === "ROLE_ADMIN";
+    }
+  },
   methods: {
     saveLayanan() {
       var data = {
@@ -109,15 +115,17 @@ export default {
         alamat: this.layanan.alamat,
         phone: this.layanan.phone
       };
-
+      const toast = useToast();
       LayananDataService.create(data)
         .then(response => {
           this.layanan.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
+          toast.success('You submitted successfully!');
         })
         .catch(e => {
           console.log(e);
+          toast.error('Error submitting the form.');
         });
     },
     
@@ -131,7 +139,7 @@ export default {
 
 <style>
 .submit-form {
-  max-width: 300px;
-  margin: auto;
+  max-width: 800px;
+  margin: 3rem;
 }
 </style>
