@@ -1,10 +1,8 @@
 <template>
   <div class="container-md">
     <header class="jumbotron mt-4">
-      <h2>Profile</h2>
-      <h3>
-        <strong>{{ currentUser.username }}</strong>
-      </h3>
+      <h1>Welcome, <strong>{{ currentUser.username }}</strong></h1>
+      <h5 style="margin-top: 20px;"><router-link to="/home">Click here</router-link> to see our Layanan</h5>
     </header>
     <p>
       <strong>Id:</strong>
