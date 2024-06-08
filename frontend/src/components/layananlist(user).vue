@@ -252,7 +252,7 @@ button::after {
   <div class="col-md-12">
     <h4 class="menu ml-5">Menu Layanan</h4>
     <div class="list-group" style="display: grid">
-      <div class="list-group-item" v-for="(layanan, index) in sortedAndFilteredLayanans" :key="index">
+      <div class="list-group-item" v-for="(layanan, index) in displayedLayanans" :key="index">
         <div class="photo">
           <img class="photos" :src="layanan.linkImg" alt="Farmasi Image" />
         </div>
@@ -296,6 +296,7 @@ button::after {
 import { useLayananStore } from '@/store/layananstore';
 import { useAuthStore } from '@/store/auth.module';
 import { computed, ref, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 
 export default {
   name: "layanans-list",
@@ -312,9 +313,9 @@ export default {
     const paginatedLayanans = computed(() => layananStore.layanans.slice(0, 6));
     const currentPage = computed(() => layananStore.currentPage);
     const totalPages = computed(() => layananStore.totalPages);
-
-    const sortedAndFilteredLayanans = computed(() => {
-      let layanans = [...layananStore.layanans];
+    const { layananall } = storeToRefs(layananStore);
+    const filteredLayanans = computed(() => {
+      let layanans = layananall.value;
       // Apply sorting
       if (selectedSortOption.value === "title") {
         layanans.sort((a, b) => a.title.localeCompare(b.title));
@@ -352,8 +353,15 @@ export default {
       }
     };
 
+    const displayedLayanans = computed(() => {
+      const startIndex = (currentPage.value - 1) * 6;
+      return filteredLayanans.value.slice(startIndex, startIndex + 6);
+    });
+
     onMounted(() => {
       layananStore.PaginatedLayanan();
+      layananStore.AllLayanan();
+      layananStore
     });
 
     return {
@@ -362,16 +370,18 @@ export default {
       searchText,
       filterOptions,
       paginatedLayanans,
-      sortedAndFilteredLayanans,
+      filteredLayanans,
       currentUser,
       currentPage,
       totalPages,
+      layananall,
       searchTitle,
       updateSelectedFilter,
       sortLayanans,
       changePage,
       nextPage,
       prevPage,
+      displayedLayanans,
       layananStore
     };
   },

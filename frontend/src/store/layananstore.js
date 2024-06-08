@@ -8,6 +8,7 @@ export const useLayananStore = defineStore('layanan', {
     message: '',
     currentPage: 1,
     totalPages: 1,
+    layananall: [],
     sortOption: 'title'
   }),
   actions: {
@@ -35,6 +36,26 @@ export const useLayananStore = defineStore('layanan', {
         const response = await LayananDataService.paginated(this.currentPage);
         this.layanans = response.data.services;
         this.totalPages = response.data.totalPages;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async AllLayanan() {
+      try {
+        // Initialize currentPage to 1 before starting to paginate through all pages
+        this.currentPage = 1;
+        this.layananall = [];
+        
+        while (this.currentPage <= this.totalPages) {
+          const response = await LayananDataService.paginated(this.currentPage);
+          this.layananall = this.layananall.concat(response.data.services);
+          this.totalPages = response.data.totalPages;
+          this.currentPage++;
+        }
+        console.log("response",this.layananall)
+        
+        // Reset currentPage after fetching all data
+        this.currentPage = 1;
       } catch (e) {
         console.error(e);
       }
@@ -73,16 +94,18 @@ export const useLayananStore = defineStore('layanan', {
     async searchTitle(searchText, selectedFilter) {
       try {
         const response = await LayananDataService.findBy(searchText, selectedFilter);
-        this.layanans = response.data.services;
+        this.layananall = response.data.services;
+        console.log(this.layananall)
       } catch (e) {
         console.log(e);
       }
     },
     async updateSelectedFilter(selectedFilter, searchText) {
+      console.log(selectedFilter)
       if (selectedFilter === "title") {
-        this.layanans = this.layanans.filter(layanan => layanan.title.toLowerCase().includes(searchText.toLowerCase()));
+        this.layananall = this.layananall.filter(layanan => layanan.title.toLowerCase().includes(searchText.toLowerCase()));
       } else {
-        this.layanans = this.layanans.filter(layanan => layanan[selectedFilter].toLowerCase().includes(searchText.toLowerCase()));
+        this.layananall = this.layananall.filter(layanan => layanan[selectedFilter].toLowerCase().includes(searchText.toLowerCase()));
       }
     },
     sortLayanans(sortOption) {
