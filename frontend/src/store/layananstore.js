@@ -7,7 +7,8 @@ export const useLayananStore = defineStore('layanan', {
     layanans: [],
     message: '',
     currentPage: 1,
-    totalPages: 1
+    totalPages: 1,
+    sortOption: 'title'
   }),
   actions: {
     async getLayanan(id) {
@@ -82,6 +83,14 @@ export const useLayananStore = defineStore('layanan', {
         this.layanans = this.layanans.filter(layanan => layanan.title.toLowerCase().includes(searchText.toLowerCase()));
       } else {
         this.layanans = this.layanans.filter(layanan => layanan[selectedFilter].toLowerCase().includes(searchText.toLowerCase()));
+      }
+    },
+    sortLayanans(sortOption) {
+      this.sortOption = sortOption;
+      if (sortOption === 'title') {
+        this.layanans.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (sortOption === 'averageRating') {
+        this.layanans.sort((a, b) => b.averageRating - a.averageRating);
       }
     }
   }
