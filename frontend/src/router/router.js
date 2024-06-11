@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "../components/Home.vue";
+import home from "../components/Home.vue"
+import Forbidden from "../components/forbidden.vue";
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
 const Profile = () => import("../components/Profile.vue")
@@ -23,6 +24,12 @@ const routes = [
   {
     path: "/login",
     component: Login,
+  },
+  {
+    path: "/forbidden",
+    name: "forbidden",
+    component: Forbidden,
+    meta: { requiresSpecialAccess: true },
   },
   {
     path: "/register",
@@ -65,15 +72,19 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//     const publicPages = ['/login', '/register', '/home'];
-//     const authRequired = !publicPages.includes(to.path);
-//     const loggedIn = localStorage.getItem('user');
-//     if (authRequired && !loggedIn) {
-//       next('/login');
-//     } else {
-//       next();
-//     }
-//   });
+router.beforeEach((to, from, next) => {
+  // Check if the route requires special access
+  if (to.matched.some(record => record.meta.requiresSpecialAccess)) {
+    // Check if the specialAccess parameter is present
+    if (!to.params.specialAccess) {
+      // Redirect to the forbidden page if special access is required but not present
+      next();
+    } else {
+      next({ path: '/forbidden' });
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

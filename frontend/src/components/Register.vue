@@ -43,9 +43,6 @@
                   </button>
                 </div>
               </Form>
-              <div v-if="message" class="alert" :class="successful ? 'alert-success' : 'alert-danger'">
-                {{ message }}
-              </div>
             </div>
           </div>
         </div>
@@ -62,7 +59,8 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { useAuthStore } from "../store/auth.module";
-
+import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 export default {
   name: "Register",
   components: {
@@ -70,7 +68,9 @@ export default {
     Field,
     ErrorMessage,
   },
-  data() {
+  setup() {
+    const toast = useToast();
+    const router = useRouter()
     const schema = yup.object().shape({
       username: yup
         .string()
@@ -95,48 +95,24 @@ export default {
         .max(15, "Must be maximum 15 digits!"),
     });
 
-    return {
-      successful: false,
-      loading: false,
-      message: "",
-      schema,
-    };
-  },
-  computed: {
-    loggedIn() {
-      const authStore = useAuthStore();
-      return authStore.status.loggedIn;
-    },
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push("/profile");
-    }
-  },
-  methods: {
-    async handleRegister(values) {
-      this.message = "";
-      this.successful = false;
-      this.loading = true;
-
-      const authStore = useAuthStore();
-      
+    const handleRegister = async (values) => {
+      // Your registration logic here
       try {
+        const authStore = useAuthStore();
         const data = await authStore.register(values);
-        this.message = data.message;
-        this.successful = true;
+        toast.success(data.message);
+        setTimeout(() => {
+          router.push("/login");
+        }, 3000); // Navigate to login route after 3 seconds
       } catch (error) {
-        this.message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        this.successful = false;
-      } finally {
-        this.loading = false;
+        toast.error(error.response.data.message);
       }
-    },
+    };
+
+    return {
+      schema,
+      handleRegister,
+    };
   },
 };
 </script>

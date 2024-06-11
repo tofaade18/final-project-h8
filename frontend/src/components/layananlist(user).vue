@@ -41,8 +41,12 @@
         <div>
           <label><strong>Alamat:</strong></label> {{ layanan.alamat }}
         </div>
-        <div style="color: orange;">
-          <label><strong>Rating:</strong></label> {{ layanan.averageRating }}
+        <div class="rating">
+          <label><strong>Rating:</strong></label>
+          <span v-if="layanan.averageRating > 0" class="star-rating" style="color: gold;">
+            <span v-for="n in Math.round(layanan.averageRating)" :key="n" class="star" style="font-size: 1.5rem;">★</span>
+          </span>
+          <span v-else> No reviews yet</span>
         </div>
         <div>
           <label><strong>Jenis:</strong></label> {{ layanan.jenis }}

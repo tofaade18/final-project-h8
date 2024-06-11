@@ -173,6 +173,9 @@
       if (!currentUser.user) {
         this.$router.push('/login');
       }
+      else if (!this.isAdmin) {
+        this.$router.push({ name: "forbidden", params: { specialAccess: 'true' } });
+      }
     }
   };
   </script>

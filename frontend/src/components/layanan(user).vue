@@ -1,7 +1,4 @@
 <template>
-  <div id="background" class="mw-100">
-    <img src="../assets/testbg.jpeg" alt="" style="align-items: center; max-width: 70%;">
-  </div>
   <div v-if="currentLayanan" style="margin: 30px; max-width: 100%;">
     <h4>Layanan {{ currentLayanan.id }}</h4>
     <img :src="currentLayanan.linkImg" alt="poto" class="photos" style="height: 200px; width: 200px; display: flex; align-items: center">
@@ -29,33 +26,41 @@
         </div>
         <div class="col-lg-4">
           <div class="form-group">
-            <label for="rating"><strong>Rating:</strong></label>
+            <label for="rating"><strong>Review:</strong></label>
             <ul>
               <li v-for="review in currentLayanan.ul" :key="review.id">
-                <h6>{{ review.user.username }}</h6>
-                <p>{{ review.rating }}</p>
+                <div class="review-item ml-2" style="display: flex; align-items: baseline;">
+                  <div class="review-content">
+                    <h6>{{ review.user.username }}</h6>
+                    <div class="review-text-box">
+                      <p>{{ review.ulasan }}</p>
+                    </div>
+                  </div>
+                  <button type="button" class="delete-button ml-4" v-if="currentUser && review.user.id === currentUser.id" @click="showDeleteModal(review.id)">×</button>
+                </div>
               </li>
             </ul>
           </div>
           <div class="form-group">
-            <label for="rating"><strong>Review:</strong></label>
-            <ul>
-              <li v-for="review in currentLayanan.ul" :key="review.id">
-                <h6>{{ review.user.username }}</h6>
-                <p>{{ review.ulasan }}</p>
-                <button type="button" class="btn btn-danger" v-if="review.user.id === currentUser.id" @click="showDeleteModal(review.id)">Delete</button>
-              </li>
-            </ul>
+            <label for="ulasan"><strong>Ulasan:</strong></label>
+            <textarea type="text" class="form-control" id="ulasan" v-model="newUlasanText" />
           </div>
         </div>
         <div class="col-lg-4">
           <div class="form-group">
-            <label for="ulasan"><strong>Ulasan:</strong></label>
-            <input type="text" class="form-control" id="ulasan" v-model="newUlasanText" />
+            <label for="rating"><strong>Rating:</strong></label>
+            <ul>
+              <li v-for="review in currentLayanan.ul" :key="review.id">
+                <h6>{{ review.user.username }}</h6>
+                <div class="star-rating">
+                  <span v-for="n in review.rating" :key="n" class="star">★</span>
+                </div>
+              </li>
+            </ul>
           </div>
           <div class="form-group">
             <label for="rating"><strong>Rating:</strong></label>
-            <input type="number" class="form-control" id="rating" v-model.number="newUlasanRating" min="0" max="5" />
+            <input type="number" class="form-control" id="rating" v-model.number="newUlasanRating" min="1" max="5" />
           </div>
           <div class="field">
             <button type="button" class="button is-info mt-2" style="border-radius: 0.5rem; width: 30%;" @click="processUlasan">Send</button>
@@ -109,23 +114,16 @@ export default {
     const router = useRouter();
 
     const currentLayanan = computed(() => layananStore.currentLayanan);
-    const file = computed(() => ulasanStore.file);
-    const messagefile = computed(() => ulasanStore.messagefile);
     const error = computed(() => ulasanStore.error);
     const message = computed(() => ulasanStore.message);
     const currentUser = computed(() => authStore.user);
     const newUlasanText = ref("");
     const newUlasanRating = ref(0);
-    const fileInput = ref(null);
     const showModal = ref(false);
     const ulasanToDelete = ref(null);
 
-    const selectFile = (event) => {
-      fileInput.value = event.target;
-    };
-
     const processUlasan = () => {
-      const existingReview = currentLayanan.value.ul.find(review => review.user.id === authStore.user.id);
+      const existingReview = currentLayanan.value.ul.find(review => review.user.id === (currentUser.value ? currentUser.value.id : null));
       if (existingReview) {
         updateUlasan();
       } else {
@@ -207,17 +205,13 @@ export default {
 
     return {
       currentLayanan,
-      file,
-      messagefile,
       error,
       message,
       newUlasanText,
       newUlasanRating,
-      fileInput,
       showModal,
       ulasanToDelete,
       currentUser,
-      selectFile,
       processUlasan,
       addUlasan,
       updateUlasan,
@@ -235,10 +229,6 @@ export default {
 </script>
 
 <style scoped>
-#background {
-  position: absolute;
-  opacity: 0.4;
-}
 .modal.is-active {
   display: flex;
   justify-content: center;
@@ -284,5 +274,25 @@ export default {
 .button.is-info {
   background-color: #209cee;
   color: white;
+}
+.review-text-box {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+/* Styles for the rating with stars */
+.star-rating {
+  color: gold; /* Color of the stars */
+}
+
+.star {
+  font-size: 1.5em; /* Size of the stars */
+}
+.delete-button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 </style>

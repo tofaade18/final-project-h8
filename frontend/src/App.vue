@@ -11,13 +11,13 @@
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin/edit" class="nav-link"> Edit </router-link>
+          <router-link to="/admin/edit" class="nav-link ml-3" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;"> Edit </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link v-if="showAdminBoard" to="/admin/add" class="nav-link">Add</router-link>
+          <router-link v-if="showAdminBoard" to="/admin/add" class="nav-link" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;">Add</router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link v-if="showAdminBoard" to="/admin/delete" class="nav-link">Delete</router-link>
+          <router-link v-if="showAdminBoard" to="/admin/delete" class="nav-link" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;">Delete</router-link>
         </li>
       </div>
 
@@ -42,9 +42,9 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/login" class="nav-link" @click.prevent="logOut" style="color: bisque;">
+          <a href="#" class="nav-link" @click.prevent="showLogoutModal" style="color: bisque;">
             <font-awesome-icon icon="sign-out-alt" /> LogOut
-          </router-link>
+          </a>
         </li>
       </div>
     </nav>
@@ -52,12 +52,31 @@
     <div class="container-fluid">
       <router-view />
     </div>
+    <div v-if="showModal" class="modal fade show" tabindex="-1" role="dialog" style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirm Logout</h5>
+            <button type="button" class="close" aria-label="Close" @click="closeModal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to log out?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
+            <button type="button" class="btn btn-danger" @click="confirmLogout">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { useAuthStore } from '@/store/auth.module';
-import { computed, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -68,8 +87,21 @@ export default {
     const showAdminBoard = computed(() => currentUser.value && currentUser.value.roles && currentUser.value.roles.includes('ROLE_ADMIN'));
     const showModeratorBoard = computed(() => currentUser.value && currentUser.value.roles && currentUser.value.roles.includes('ROLE_MODERATOR'));
     const router = useRouter();
-    const logOut = () => {
+    const showModal = ref(false);
+
+    const showLogoutModal = () => {
+      showModal.value = true;
+    };
+
+    const closeModal = () => {
+      showModal.value = false;
+    };
+    const confirmLogout = () => {
       authStore.logout();
+      closeModal();
+      setTimeout(() => {
+        router.push('/login');
+      }, 1000); 
     };
     onMounted(() => {
       if (!currentUser.value) {
@@ -80,7 +112,10 @@ export default {
       currentUser,
       showAdminBoard,
       showModeratorBoard,
-      logOut,
+      showModal,
+      showLogoutModal,
+      closeModal,
+      confirmLogout,
     };
   },
 };
