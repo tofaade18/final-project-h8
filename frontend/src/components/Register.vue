@@ -2,7 +2,10 @@
   <section class="text-center text-lg-start">
     <div class="container pt-4">
       <div class="row g-0 align-items-center">
-        <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="col-lg-6 mb-5 mb-lg-0 p-0">
+          <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" style="width: 485px; border-radius: 25px; padding: 10px; box-shadow: 5px 10px 5px lightblue; height: 505px" alt="" />
+        </div>
+        <div class="col-lg-6 mb-5 mb-lg-0 p-0">
           <div class="card cascading-right bg-body-tertiary" style="
               backdrop-filter: blur(30px); margin-right: -39px; border-radius: 15px; padding: 10px; box-shadow: 10px 5px 5px black;
               ">
@@ -45,10 +48,6 @@
               </Form>
             </div>
           </div>
-        </div>
-
-        <div class="col-lg-6 mb-5 mb-lg-0">
-          <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" style="width: 100%; border-radius: 25px; padding: 10px; box-shadow: 5px 10px 5px lightblue; height: 505px" alt="" />
         </div>
       </div>
     </div>

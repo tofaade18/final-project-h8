@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand" style="background-color: rgba(150,30,40, 0.8); max-width: 100%">
+    <nav class="navbar navbar-expand" style="background-color: rgba(150,30,40, 0.8); max-width: 100%; min-width: 500px;">
       <div class="navbar-nav mr-auto">
         <router-link to="/home">
           <img src="../src/assets/images.png" alt="" style="width: 30px; margin-top: 7px;" />
@@ -49,7 +49,7 @@
       </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid pl-0">
       <router-view />
     </div>
     <div v-if="showModal" class="modal fade show" tabindex="-1" role="dialog" style="display: block; background-color: rgba(0, 0, 0, 0.5);">

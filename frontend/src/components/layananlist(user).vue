@@ -1,8 +1,8 @@
 <template>
   <div class="list row">
     <div class="filter-container mt-2">
-      <div class="d-flex align-items-start justify-content-start p-1 ml-1" style="width: 100%;">
-        <div class="rounded bg-secondary p-3 mb-3" style="width: 100%;" >
+      <div class="d-flex align-items-start justify-content-start" style="width: 100%;">
+        <div class="rounded bg-secondary p-3 mb-3" style="min-width: 400px;" >
           <div class="container-fluid d-flex p-0">
             <div class="d-flex rounded-start border-end border-dark bg-light">
               <svg viewBox="0 0 20 20" aria-hidden="true" class="pointer-events-none w-5 fill-gray-500">
@@ -182,8 +182,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-left: 70px;
-
+  justify-content: center;
 }
 .list-group-item {
   display: flex;

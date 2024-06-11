@@ -1,7 +1,7 @@
 <template>
   <div v-if="currentLayanan" style="margin: 30px; max-width: 100%;">
     <h4>Layanan {{ currentLayanan.id }}</h4>
-    <img :src="currentLayanan.linkImg" alt="poto" class="photos" style="height: 200px; width: 200px; display: flex; align-items: center">
+    <img :src="currentLayanan.linkImg" alt="Image" class="photos" style="height: 200px; width: 200px; display: flex; align-items: center">
   </div>
   <div v-if="currentLayanan" class="edit-form" style="margin: 30px;">
     <form class="container-fluid-xl">
@@ -121,13 +121,22 @@ export default {
     const newUlasanRating = ref(0);
     const showModal = ref(false);
     const ulasanToDelete = ref(null);
+    const isSubmitting = ref(false);
 
-    const processUlasan = () => {
-      const existingReview = currentLayanan.value.ul.find(review => review.user.id === (currentUser.value ? currentUser.value.id : null));
+    const processUlasan = async () => {
+      if (isSubmitting.value) {
+        return;
+      }
+      isSubmitting.value = true;
+      try {
+        const existingReview = currentLayanan.value.ul.find(review => review.user.id === (currentUser.value ? currentUser.value.id : null));
       if (existingReview) {
-        updateUlasan();
+        await updateUlasan();
       } else {
-        addUlasan();
+        await addUlasan();
+      }
+      } finally {
+        isSubmitting.value = false
       }
     };
 
@@ -143,6 +152,8 @@ export default {
       };
       await ulasanStore.addUlasan(route.params.id, data);
       showToast(ulasanStore.message, ulasanStore.error);
+      newUlasanText.value = "";
+      newUlasanRating.value = 0;
       ulasanStore.getUlasan(route.params.id);
       layananStore.getLayanan(route.params.id);
     };
@@ -158,6 +169,8 @@ export default {
       };
       await ulasanStore.updateUlasan(route.params.id, data);
       showToast(ulasanStore.message, ulasanStore.error);
+      newUlasanText.value ="";
+      newUlasanRating.value = 0;
       ulasanStore.getUlasan(route.params.id);
       layananStore.getLayanan(route.params.id);
     };
@@ -212,6 +225,7 @@ export default {
       showModal,
       ulasanToDelete,
       currentUser,
+      isSubmitting,
       processUlasan,
       addUlasan,
       updateUlasan,
@@ -229,6 +243,11 @@ export default {
 </script>
 
 <style scoped>
+.photos {
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 5px;
+}
 .modal.is-active {
   display: flex;
   justify-content: center;
