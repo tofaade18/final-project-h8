@@ -1,25 +1,24 @@
 import axios from 'axios';
 
-const API_URL = 'http://54.157.51.139:3000/api/auth/';
+const API_URL = 'https://group-connection.handuktangerang.online/api/auth/';
 
 class AuthService {
-  login(user) {
-    return axios
+  async login(user) {
+    const response = await axios
       .post(API_URL + 'signin', {
         username: user.username,
         password: user.password
-      })
-      .then(response => {
-        if (response.data.accessToken) {
-          localStorage.setItem('token', response.data.accessToken);
-        }
-
-        return response.data;
       });
+    if (response.data.accessToken) {
+      localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('user', user)
+    }
+    return response.data;
   }
 
   logout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('token')
   }
 
   register(user) {

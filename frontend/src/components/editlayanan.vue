@@ -167,6 +167,12 @@
         this.currentLayanan = null;
         this.submitted = false;
       }
+    },
+    mounted() {
+      const currentUser = useAuthStore();
+      if (!currentUser.user) {
+        this.$router.push('/login');
+      }
     }
   };
   </script>

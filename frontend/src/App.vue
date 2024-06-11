@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand" style="background-color: rgba(150,30,40, 0.8); width: 100%">
+    <nav class="navbar navbar-expand" style="background-color: rgba(150,30,40, 0.8); max-width: 100%">
       <div class="navbar-nav mr-auto">
         <router-link to="/home">
           <img src="../src/assets/images.png" alt="" style="width: 30px; margin-top: 7px;" />
         </router-link>
         <li class="nav-item" v-if="currentUser">
           <router-link to="/home" class="nav-link" style="color: azure;">
-            <font-awesome-icon /> H8 Group User
+            <font-awesome-icon /> H8GroupConnect
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
@@ -57,7 +57,8 @@
 
 <script>
 import { useAuthStore } from '@/store/auth.module';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
@@ -66,11 +67,15 @@ export default {
     const currentUser = computed(() => authStore.user);
     const showAdminBoard = computed(() => currentUser.value && currentUser.value.roles && currentUser.value.roles.includes('ROLE_ADMIN'));
     const showModeratorBoard = computed(() => currentUser.value && currentUser.value.roles && currentUser.value.roles.includes('ROLE_MODERATOR'));
-
+    const router = useRouter();
     const logOut = () => {
       authStore.logout();
     };
-
+    onMounted(() => {
+      if (!currentUser.value) {
+        router.push('/login');
+      }
+    });
     return {
       currentUser,
       showAdminBoard,

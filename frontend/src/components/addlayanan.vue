@@ -133,7 +133,13 @@ export default {
       this.submitted = false;
       this.layanan = {};
     }
-  }
+  },
+  mounted() {
+      const currentUser = useAuthStore();
+      if (!currentUser.user) {
+        this.$router.push('/login');
+      }
+    }
 };
 </script>
 

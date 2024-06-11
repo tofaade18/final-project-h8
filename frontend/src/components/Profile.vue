@@ -1,5 +1,5 @@
 <template>
-  <div class="container-md">
+  <div v-if="currentUser" class="container-md">
     <header class="jumbotron mt-4">
       <h1>Welcome, <strong>{{ currentUser.username }}</strong></h1>
       <h5 style="margin-top: 20px;"><router-link to="/home">Click here</router-link> to see our Layanan</h5>
@@ -16,7 +16,7 @@
       <h3 class="text-hist ml-2"><strong> History </strong></h3>
       <div class="container-lg mt-4">
         <div class="list row d-flex flex-wrap wrap mw-100">
-          <div class="col-md-4" v-for="(currentHistory, index) in ulasanshist" :key="index">
+          <div class="col-md-4" v-for="(currentHistory, index) in ulasanshist.filter(hist => hist.layanan !== null)" :key="index">
             <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Ulasan {{ index + 1 }}</h5>
@@ -31,6 +31,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div v-else>
+    <p>Redirecting to login...</p>
   </div>
 
   <div v-if="showDeleteModalFlag" class="modal fade show" tabindex="-1" role="dialog" style="display: block; background-color: rgba(0,0,0,0.5);">
@@ -169,6 +172,13 @@ export default {
         position: "right",
         backgroundColor: isError ? "linear-gradient(to right, #ff5f6d, #ffc371)" : "linear-gradient(to right, #8e7cc3, #96c93d)",
       }).showToast();
+    },
+  },
+  watch: {
+    currentUser(newVal) {
+      if (!newVal) {
+        this.$router.push('/login');
+      }
     },
   },
   mounted() {

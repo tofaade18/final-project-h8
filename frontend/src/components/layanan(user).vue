@@ -1,8 +1,8 @@
 <template>
-  <div id="background" class="col-md-12 mw-100">
-    <img src="../assets/testbg.jpeg" alt="" style="align-items: center; max-width: 100%;">
+  <div id="background" class="mw-100">
+    <img src="../assets/testbg.jpeg" alt="" style="align-items: center; max-width: 70%;">
   </div>
-  <div v-if="currentLayanan" style="margin: 30px;">
+  <div v-if="currentLayanan" style="margin: 30px; max-width: 100%;">
     <h4>Layanan {{ currentLayanan.id }}</h4>
     <img :src="currentLayanan.linkImg" alt="poto" class="photos" style="height: 200px; width: 200px; display: flex; align-items: center">
   </div>
@@ -95,7 +95,7 @@ import { useAuthStore } from '@/store/auth.module';
 import { useLayananStore } from '@/store/layananstore';
 import { useUlasanStore } from '@/store/ulasanstore';
 import { computed, ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 
@@ -106,6 +106,7 @@ export default {
     const layananStore = useLayananStore();
     const ulasanStore = useUlasanStore();
     const route = useRoute();
+    const router = useRouter();
 
     const currentLayanan = computed(() => layananStore.currentLayanan);
     const file = computed(() => ulasanStore.file);
@@ -197,6 +198,9 @@ export default {
     };
 
     onMounted(() => {
+      if (!currentUser.value) {
+        router.push('/login');
+      }
       ulasanStore.getUlasan(route.params.id);
       layananStore.getLayanan(route.params.id);
     });
