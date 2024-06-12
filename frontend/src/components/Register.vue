@@ -10,7 +10,7 @@
               backdrop-filter: blur(30px); margin-right: -39px; border-radius: 15px; padding: 10px; box-shadow: 10px 5px 5px black;
               ">
             <div class="card-body p-3 shadow-5 text-center">
-              <h2 class="fw-bold mb-5">Sign up now</h2>
+              <h2 class="fw-bold mb-5">Daftar sekarang</h2>
               <Form @submit="handleRegister" :validation-schema="schema">
                 <div v-if="!successful">
                   <div class="row">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-6 mb-4">
                       <div class="form-outline">
-                        <label for="phone" class="d-flex justify-content-flex-start">Phone</label>
+                        <label for="phone" class="d-flex justify-content-flex-start">No. HP</label>
                         <Field name="phone" type="text" class="form-control" />
                         <ErrorMessage name="phone" class="error-feedback" />
                       </div>

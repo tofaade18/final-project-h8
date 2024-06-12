@@ -3,21 +3,23 @@
     <nav class="navbar navbar-expand" style="background-color: rgba(150,30,40, 0.8); max-width: 100%; min-width: 500px;">
       <div class="navbar-nav mr-auto">
         <router-link to="/home">
-          <img src="../src/assets/images.png" alt="" style="width: 30px; margin-top: 7px;" />
+          <div style="font-size: x-large; color: white">
+          <i class="fas fa-home-lg"></i>
+          </div>
         </router-link>
         <li class="nav-item" v-if="currentUser">
           <router-link to="/home" class="nav-link" style="color: azure;">
-            <font-awesome-icon /> H8GroupConnect
+           H8GroupConnect
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin/edit" class="nav-link ml-3" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;"> Edit </router-link>
+          <router-link to="/admin/edit" class="nav-link ml-3 text-white" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;"> Ubah </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link v-if="showAdminBoard" to="/admin/add" class="nav-link" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;">Add</router-link>
+          <router-link v-if="showAdminBoard" to="/admin/add" class="nav-link text-white" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;">Tambah</router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link v-if="showAdminBoard" to="/admin/delete" class="nav-link" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;">Delete</router-link>
+          <router-link v-if="showAdminBoard" to="/admin/delete" class="nav-link text-white" style="font-size: larger;font-family: Arial, Helvetica, sans-serif;">Hapus</router-link>
         </li>
       </div>
 
@@ -49,23 +51,23 @@
       </div>
     </nav>
 
-    <div class="container-fluid pl-0">
+    <div class="container-fluid">
       <router-view />
     </div>
     <div v-if="showModal" class="modal fade show" tabindex="-1" role="dialog" style="display: block; background-color: rgba(0, 0, 0, 0.5);">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Confirm Logout</h5>
+            <h5 class="modal-title">Logout</h5>
             <button type="button" class="close" aria-label="Close" @click="closeModal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <p>Are you sure you want to log out?</p>
+            <p>Apakah Anda yakin ingin keluar?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
+            <button type="button" class="btn btn-secondary" @click="closeModal">Batal</button>
             <button type="button" class="btn btn-danger" @click="confirmLogout">Logout</button>
           </div>
         </div>

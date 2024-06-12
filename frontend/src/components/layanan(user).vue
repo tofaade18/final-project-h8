@@ -1,6 +1,7 @@
 <template>
   <div v-if="currentLayanan" style="margin: 30px; max-width: 100%;">
-    <h4>Layanan {{ currentLayanan.id }}</h4>
+    <h4>{{ currentLayanan.title }}</h4>
+    <i class="fas fa-phone-alt">⠀{{ currentLayanan.phone }}</i>
     <img :src="currentLayanan.linkImg" alt="Image" class="photos" style="height: 200px; width: 200px; display: flex; align-items: center">
   </div>
   <div v-if="currentLayanan" class="edit-form" style="margin: 30px;">
@@ -8,31 +9,29 @@
       <div class="list row mt-3 ml-0 mb-2 mw-100">
         <div class="col-lg-4">
           <div class="form-group">
-            <label for="title"><strong>Title:</strong></label>
-            <p>{{ currentLayanan.title }}</p>
+            <label for="ulasan"><strong>Ulasan :</strong></label>
+            <textarea type="text" class="form-control" id="ulasan" v-model="newUlasanText" />
           </div>
           <div class="form-group">
-            <label for="description"><strong>Description:</strong></label>
-            <p>{{ currentLayanan.description }}</p>
+            <label for="rating"><strong>Nilai :</strong></label>
+            <input type="number" class="form-control" id="rating" v-model.number="newUlasanRating" min="1" max="5" />
           </div>
-          <div class="form-group">
-            <label for="alamat"><strong>Alamat:</strong></label>
-            <p>{{ currentLayanan.alamat }}</p>
-          </div>
-          <div class="form-group">
-            <label for="Phone"><strong>Phone:</strong></label>
-            <p>{{ currentLayanan.phone }}</p>
+          <div class="field">
+            <button type="button" class="button is-info mt-2" style="border-radius: 0.5rem; width: 30%;" @click="processUlasan">Kirim</button>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="form-group">
-            <label for="rating"><strong>Review:</strong></label>
+            <label for="rating"><strong>Komentar :</strong></label>
             <ul>
               <li v-for="review in currentLayanan.ul" :key="review.id">
                 <div class="review-item ml-2" style="display: flex; align-items: baseline;">
                   <div class="review-content">
-                    <h6>{{ review.user.username }}</h6>
-                    <div class="review-text-box">
+                    <div class="user-anon mb-1">
+                    <i class="fas fa-circle-user"></i>
+                    {{ review.user.username }}
+                    </div>
+                    <div class="review-text-box mt-1">
                       <p>{{ review.ulasan }}</p>
                     </div>
                   </div>
@@ -41,29 +40,21 @@
               </li>
             </ul>
           </div>
-          <div class="form-group">
-            <label for="ulasan"><strong>Ulasan:</strong></label>
-            <textarea type="text" class="form-control" id="ulasan" v-model="newUlasanText" />
-          </div>
         </div>
         <div class="col-lg-4">
           <div class="form-group">
-            <label for="rating"><strong>Rating:</strong></label>
+            <label for="rating"><strong>Nilai :</strong></label>
             <ul>
               <li v-for="review in currentLayanan.ul" :key="review.id">
-                <h6>{{ review.user.username }}</h6>
+                <div class="user-anon">
+                <i class="fas fa-circle-user"></i>
+                {{ review.user.username }}
+                </div>
                 <div class="star-rating">
                   <span v-for="n in review.rating" :key="n" class="star">★</span>
                 </div>
               </li>
             </ul>
-          </div>
-          <div class="form-group">
-            <label for="rating"><strong>Rating:</strong></label>
-            <input type="number" class="form-control" id="rating" v-model.number="newUlasanRating" min="1" max="5" />
-          </div>
-          <div class="field">
-            <button type="button" class="button is-info mt-2" style="border-radius: 0.5rem; width: 30%;" @click="processUlasan">Send</button>
           </div>
         </div>
       </div>
@@ -243,6 +234,7 @@ export default {
 </script>
 
 <style scoped>
+
 .photos {
   object-fit: cover;
   border-radius: 10px;

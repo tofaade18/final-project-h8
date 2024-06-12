@@ -1,5 +1,5 @@
 <template>
-  <section class="vh-70 mt-5">
+  <section class="vh-70 mt-5" style="min-width: 500px">
     <div class="container-fluid h-custom">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-9 col-lg-6 col-xl-5">
@@ -28,7 +28,7 @@
                 style="padding-left: 2.5rem; padding-right: 2.5rem;" :disabled="loading">
                 <span v-show="loading" class="spinner-border spinner-border-sm"></span><span>Login</span>
               </button>
-              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <router-link to="/register">Register</router-link></p>
+              <p class="small fw-bold mt-2 pt-1 mb-0">Apakah Anda tidak mempunyai akun? <router-link to="/register">Daftar disini</router-link></p>
             </div>
             <div class="form-group">
               <div v-if="message" class="alert alert-danger" role="alert">

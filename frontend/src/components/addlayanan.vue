@@ -2,7 +2,7 @@
   <div class="submit-form">
     <div v-if="!submitted">
       <div class="form-group">
-        <label for="title">Title</label>
+        <label for="title">Judul</label>
         <input
           type="text"
           class="form-control"
@@ -14,7 +14,7 @@
       </div>
 
       <div class="form-group">
-        <label for="description">Description</label>
+        <label for="description">Deskripsi</label>
         <input
           class="form-control"
           id="description"
@@ -36,7 +36,7 @@
       </div>
 
       <div class="form-group">
-        <label for="linkImg">Link Image</label>
+        <label for="linkImg">Link Gambar</label>
         <input
           class="form-control"
           id="linkImg"
@@ -58,7 +58,7 @@
       </div>
 
        <div class="form-group">
-        <label for="phone">Phone</label>
+        <label for="phone">No. HP</label>
         <input
           class="form-control"
           id="phone"
